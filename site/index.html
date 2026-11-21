@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Compare your resume to a job description and build a two-week placement prep plan.">
+<title>SkillSphere · Placement skill gap analyser</title>
+<link rel="stylesheet" href="/assets/style.css">
+<script type="module" src="/assets/app.mjs"></script>
+</head>
+<body>
+<header class="bar"><div class="bar-inner"><a class="brand" href="./"><span class="mark" aria-hidden="true"></span> SkillSphere</a><nav class="nav" aria-label="App sections"><a href="#analyse-form">Compare roles</a><button class="secondary" id="account" type="button">Student profile</button></nav></div></header>
+<main>
+  <section class="hero" aria-labelledby="main-title">
+    <div class="hero-copy"><p class="eyebrow">Placement skill gap analyser</p>
+    <h1 id="main-title">Find your best fit.<br>Build what’s missing<span>.</span></h1>
+    <p>Compare one resume against up to five roles. See why each role fits, build your skills, and practise explaining your experience.</p>
+    <div class="hero-actions"><a href="#analyse-form" class="action-link">Compare my resume</a><button type="button" class="hero-demo" id="hero-demo">Explore a live demo</button></div></div>
+    <div class="orbital" aria-hidden="true"><div class="orbit orbit-outer"><i></i></div><div class="orbit orbit-inner"><i></i></div><div class="planet"></div></div>
+  </section>
+  <p id="session-note" class="session-note">Checking student session…</p>
+  <dialog id="profile-dialog" aria-labelledby="profile-title">
+    <div class="section-head"><h2 id="profile-title">Student profile</h2><button id="close-profile" class="quiet" type="button">Close</button></div>
+    <section id="signed-out">
+      <form id="auth-form">
+        <label for="auth-mode">Account action</label>
+        <select id="auth-mode"><option value="login">Sign in</option><option value="register">Create student profile</option></select>
+        <div id="register-name" hidden><label for="student-name">Full name</label><input id="student-name" maxlength="70" autocomplete="name"></div>
+        <label for="student-id">Student ID</label><input id="student-id" required minlength="3" maxlength="30" autocomplete="username" placeholder="Example: DEMO-101">
+        <label for="password">Password</label><input id="password" type="password" required minlength="8" maxlength="128" autocomplete="current-password">
+        <button id="auth-submit" type="submit">Sign in</button>
+      </form>
+      <p class="hint">Use fictional student details for a shared demo. Student IDs are self-entered.</p>
+    </section>
+    <section id="signed-in" hidden>
+      <p id="student-details"></p>
+      <h3>Saved reports</h3>
+      <ul id="history"></ul>
+      <button id="logout" class="secondary" type="button">Sign out</button>
+    </section>
+    <p id="account-status" role="status"></p>
+  </dialog>
+  <form id="analyse-form">
+    <div class="inputs">
+      <section class="card input-card resume-card">
+        <h2>Resume</h2>
+        <p class="hint">Text-based PDF · Up to 15 MB and 30 pages</p>
+        <div id="drop"><label for="resume">Choose resume PDF</label>
+        <input id="resume" name="resume" type="file" accept=".pdf,application/pdf">
+        <p id="filename" class="hint">Or drop a PDF here</p></div>
+        <details id="paste-panel"><summary>Paste resume text instead</summary>
+          <label for="resume-text">Resume text</label>
+          <textarea id="resume-text" maxlength="60000" rows="4" placeholder="Paste the text from your resume"></textarea>
+        </details>
+      </section>
+      <section class="card input-card role-card">
+        <div class="section-head"><h2>Target roles</h2><span class="pill" id="role-count">1 of 5 roles</span></div>
+        <label for="role-title">Role title (optional)</label><input id="role-title" maxlength="100" placeholder="Example: Junior Software Engineer">
+        <p class="hint">Keep the original line breaks for references.</p>
+        <label for="jd">Role requirements</label>
+        <textarea id="jd" name="jd" maxlength="60000" rows="7" placeholder="Paste the job description here"></textarea>
+        <label for="jd-file" class="upload">Or upload a .txt / .pdf</label>
+        <input id="jd-file" type="file" accept=".txt,.pdf,application/pdf,text/plain">
+        <div id="extra-jobs"></div>
+        <button class="secondary add-role" id="add-job" type="button">Add another role</button>
+      </section>
+    </div>
+    <div class="controls"><button type="submit" id="run">Analyse skill gaps</button>
+      <button type="button" class="secondary" id="sample">Load an example</button>
+      <button type="button" class="secondary" id="sample-multi">Try a multi-role example</button>
+      <button type="reset" class="quiet">Clear</button></div>
+    <p id="status" role="status" aria-live="polite"></p>
+  </form>
+  <section id="report" hidden aria-labelledby="report-title">
+    <section id="ranking" class="card section" hidden aria-labelledby="ranking-title">
+      <div class="section-head"><h2 id="ranking-title">Multi-Job Comparison</h2></div>
+      <p class="hint">Ranked by displayed skill coverage, then required-skill coverage for ties. Select a role to explore its report.</p>
+      <div id="ranking-rows"></div>
+      <section id="impact" class="impact" hidden>
+        <h3>Cross-role Skill Impact</h3>
+        <p class="hint">See which roles one skill could help you prepare for. The preview assumes you can show evidence of that skill.</p>
+        <label for="impact-skill">Explore a skill gap</label><select id="impact-skill"></select>
+        <div id="impact-result" aria-live="polite"></div>
+      </section>
+    </section>
+    <div class="section-head result-head"><div><p class="eyebrow">Role comparison</p><h2 id="report-title" tabindex="-1">Your skill report</h2></div><div class="report-actions"><button id="export-pdf" type="button">Save as PDF</button><button id="export" class="secondary" type="button">Download JSON</button></div></div>
+    <nav class="report-nav" aria-label="Report sections"><a href="#skill-evidence">Skill evidence</a><a id="roadmap-link" href="#plan-section">Roadmap</a><a href="#interview">Interview practice</a><a id="studio-link" href="#studio">Proof Studio</a><a id="lab-link" href="#lab">Evidence Lab</a></nav>
+    <div id="metrics" class="metrics"></div>
+    <div class="inputs" id="skill-evidence">
+      <section class="card gap-card"><h3>Missing skills <span id="gap-count" class="pill"></span></h3><p class="hint">Ranked by requirement priority, number of mentions and first appearance.</p><div id="gaps"></div></section>
+      <section class="card match-card"><h3>Matched skills <span id="match-count" class="pill"></span></h3><p class="hint">Expand a match to see evidence from both documents.</p><div id="matches"></div>
+      <details id="inventory"><summary>All detected resume skills</summary><p id="all-resume"></p></details></section>
+    </div>
+    <section id="plan-section" class="card section">
+      <div class="section-head"><div><p class="eyebrow">Two-week roadmap</p><h2>Turn gaps into practice</h2></div><p id="progress" role="status"></p></div>
+      <progress id="roadmap-meter" max="14" value="0" aria-label="Roadmap days completed"></progress>
+      <p id="focus-skills" class="hint"></p><div id="days" class="weeks"></div>
+    </section>
+    <section id="studio" class="card section" aria-labelledby="studio-title">
+      <p class="eyebrow">Proof Studio</p><h2 id="studio-title" tabindex="-1">Build something you can show</h2>
+      <p class="hint">Choose any gap to get a mini-project, a verification step, and an artifact to keep.</p>
+      <label for="studio-skill">Skill to build</label><select id="studio-skill"></select>
+      <ol id="studio-brief" class="studio-brief"></ol>
+      <div class="studio-fields">
+        <div><label for="studio-action">What did you build?</label><textarea id="studio-action" rows="2" maxlength="500"></textarea></div>
+        <div><label for="studio-check">How did you test it?</label><textarea id="studio-check" rows="2" maxlength="500"></textarea></div>
+        <div><label for="studio-result">What happened? Include the result you actually observed.</label><textarea id="studio-result" rows="2" maxlength="500"></textarea></div>
+        <div><label for="studio-artifact">Where can you show it? Optional link or filename.</label><input id="studio-artifact" maxlength="500"></div>
+      </div>
+      <div class="controls"><button id="make-proof" type="button">Draft evidence statement</button>
+      <button id="save-studio" type="button" class="secondary">Save to this report</button></div>
+      <label for="studio-output">Evidence statement</label><textarea id="studio-output" rows="3" readonly></textarea>
+      <button id="send-proof" type="button" class="secondary" disabled>Review in Evidence Lab</button>
+      <p id="studio-status" role="status"></p>
+    </section>
+    <section id="interview" class="card section" aria-labelledby="interview-title">
+      <p class="eyebrow">Interview Practice</p><h2 id="interview-title">Rehearse for this role</h2>
+      <p class="hint">Use real examples from class, projects or teamwork. Review the prompts and draft your own answers.</p>
+      <div id="questions"></div>
+      <button id="save-practice" type="button" class="secondary">Save answers and roadmap progress</button>
+      <p id="practice-status" role="status"></p>
+    </section>
+    <section id="lab" class="lab section">
+      <p class="eyebrow">Evidence Lab</p><h2>Preview your progress</h2>
+      <p>Add a sentence about work you completed. Review the skills detected in it to preview your coverage.</p>
+      <label for="proof">Project evidence</label>
+      <textarea id="proof" maxlength="12000" rows="3" placeholder="Example: Wrote a Dockerfile and verified the container by running the app on a clean machine."></textarea>
+      <button id="preview" type="button">Review evidence</button>
+      <div id="lab-result" aria-live="polite"></div>
+    </section>
+  </section>
+</main>
+<footer><div>SkillSphere <span>·</span> Code Fuzion M5</div><div>PDFs are read in your browser. The local server receives extracted text for analysis.</div></footer>
+<article id="print-report" aria-hidden="true"></article>
+</body>
+</html>
