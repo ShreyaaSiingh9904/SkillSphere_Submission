@@ -1,0 +1,18 @@
+SKILLSPHERE — FRESH COPY
+
+1. In VS Code, choose File > Open Folder and select SkillSphere_Submission.
+2. Choose Terminal > New Terminal.
+3. Paste this command and press Return:
+
+   SKILLSPHERE_PORT=8001 zsh Start-Mac.command
+
+4. When the terminal says Running on http://127.0.0.1:8001, open that exact
+   address in Google Chrome. Keep the terminal open.
+5. Click Explore a live demo. Look for Cross-role Skill Impact and Proof Studio.
+
+No files from another SkillSphere folder are needed. This copy creates its own
+database and starts with no accounts or saved reports. The first launch installs
+Flask if needed, so stay online. Python and Node.js only need to be installed once
+on your Mac. Port 8001 lets you distinguish this copy from the old one on port 8000.
+
+Next time, open this same folder and run the same command. Press Control+C to stop.
