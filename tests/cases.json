@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Frontend design",
+    "resume": "HTML5, CSS3, ReactJS and ES6\nImplemented a REST API",
+    "jd": "Required skills:\nBuild with React.js, TypeScript and CSS.\nUse RESTful APIs and Redux.\nPreferred skills:\nFigma is a plus.",
+    "expected": ["TypeScript", "Redux", "Figma"]
+  },
+  {
+    "name": "Data analyst",
+    "resume": "MS Excel, Pandas, PostgreSQL; completed Data Visualisation",
+    "jd": "Must have:\nUse SQL and Postgres for queries.\nMake dashboards with PowerBI and Microsoft Excel.\nPython and Tableau are desirable.",
+    "expected": ["SQL", "Power BI", "Python", "Tableau"]
+  },
+  {
+    "name": "Platform engineer",
+    "resume": "Docker Compose, GitHub Actions, GNU/Linux\nBuilt deployment workflows on Amazon Web Services.",
+    "jd": "Requirements:\nAWS, Linux, Docker Compose\nMaintain Kubernetes deployments and CI/CD.\nPreferred skills:\nTerraform",
+    "expected": ["Kubernetes", "CI/CD", "Terraform"]
+  },
+  {
+    "name": "Backend developer",
+    "resume": "Java SE and OOPS. Built an app with SpringBoot and MySQL.",
+    "jd": "Java, Spring Boot, MySQL and Object Oriented Programming\nMust have experience with Redis and Apache Kafka.\nNo experience with Django required.",
+    "expected": ["Redis", "Kafka"]
+  },
+  {
+    "name": "Design intern",
+    "resume": "Figma, wireframes and Graphic Design\nUsed usability testing in a student project",
+    "jd": "Figma and Wireframing\nCandidates should know User Research, Adobe XD and UX.\nAccessibility experience with WCAG is preferred.",
+    "expected": ["User Research", "Adobe XD", "UX Design", "Web Accessibility"]
+  },
+  {
+    "name": "QA engineer",
+    "resume": "Python3, SQL Server, QA, automated testing",
+    "jd": "Python and Software Testing\nSelenium, Postman and GitHub Actions are required.\nCypress is preferred.",
+    "expected": ["Selenium", "Postman", "GitHub Actions", "Cypress"]
+  },
+  {
+    "name": "Embedded intern",
+    "resume": "C language, Arduino and Raspberry Pi\nCurrently learning C++",
+    "jd": "Required skills:\nC, C++, Embedded Systems and Arduino.",
+    "expected": ["C++", "Embedded Systems"]
+  },
+  {
+    "name": "Coverage limitation on uncatalogued tools",
+    "resume": "Python and AWS",
+    "jd": "Python and AWS.\nMust have Helm and OpenTofu.",
+    "expected": ["Helm", "OpenTofu"]
+  }
+]
