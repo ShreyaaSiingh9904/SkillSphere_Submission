@@ -1,0 +1,8 @@
+*
+!Dockerfile
+!requirements.txt
+!requirements-deploy.txt
+!app.py
+!analyse.mjs
+!site/
+!site/**
